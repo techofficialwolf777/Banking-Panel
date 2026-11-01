@@ -1,0 +1,1790 @@
+/* ===================================
+   BANK QR MANAGER V3
+=================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Segoe UI",sans-serif;
+}
+
+body{
+
+    width:1400px;
+
+    min-height:700px;
+
+    background:#0f172a;
+
+    color:#ffffff;
+
+}
+
+.container{
+
+    padding:20px;
+
+}
+
+
+/* ===========================
+   HEADER
+=========================== */
+
+.header{
+
+    display:flex;
+    
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:20px;
+
+}
+
+.title{
+
+    font-size:28px;
+
+    font-weight:700;
+
+    color:#ffffff;
+
+}
+
+#searchInput{
+
+    width:280px;
+
+    padding:12px 15px;
+
+    background:#1e293b;
+
+    border:1px solid #334155;
+
+    border-radius:12px;
+
+    color:white;
+
+    outline:none;
+
+    font-size:15px;
+
+}
+
+#searchInput:focus{
+
+    border-color:#3b82f6;
+
+}
+
+
+/* ===========================
+   TOOLBAR
+=========================== */
+
+.toolbar{
+
+    display:flex;
+
+    gap:12px;
+
+    margin-bottom:25px;
+
+}
+
+.toolbar button{
+
+    padding:12px 22px;
+    min-height: fit-content;
+    height: 20px;
+
+    border:none;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    color:white;
+
+    transition:.25s;
+
+}
+
+.toolbar button:hover{
+
+    transform:translateY(-2px);
+
+}
+
+#addBankBtn{
+
+    background:#09c75f;
+
+}
+
+#exportBtn{
+
+    background:#16a34a;
+
+}
+
+#importBtn{
+
+    background:#9333ea;
+
+}
+
+
+/* ===========================
+   BANK LIST
+=========================== */
+
+#bankContainer{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+}
+
+/* ===================================
+   HORIZONTAL BANK PANEL
+=================================== */
+
+.bankCard{
+
+    background:#1e293b;
+
+    border:1px solid #334155;
+
+    border-radius:18px;
+
+    padding:20px;
+
+    transition:.25s;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.25);
+
+}
+
+.bankCard:hover{
+
+    border-color:#3b82f6;
+
+    transform:translateY(-2px);
+
+}
+
+
+/* ===============================
+   CARD HEADER
+================================ */
+
+.cardHeader{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:18px;
+
+    border-bottom:1px solid #334155;
+
+    padding-bottom:12px;
+
+}
+
+.displayName{
+
+    font-size:22px;
+
+    font-weight:700;
+
+    color:#ffffff;
+
+}
+
+.favorite{
+
+    font-size:24px;
+
+    cursor:pointer;
+
+}
+
+
+/* ===============================
+   BODY
+================================ */
+
+.cardBody{
+
+    display:grid;
+
+    grid-template-columns:90px 1fr 220px;
+
+    gap:25px;
+
+    align-items:start;
+
+}
+
+
+/* ===============================
+   BANK LOGO
+================================ */
+
+.bankLogo{
+
+    width:80px;
+
+    height:80px;
+
+    border-radius:50%;
+
+    object-fit:contain;
+
+    background:white;
+
+    padding:6px;
+
+}
+
+
+/* ===============================
+   DETAILS
+================================ */
+
+.details{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+}
+
+.detailRow{
+
+    display:flex;
+
+}
+
+.detailLabel{
+
+    width:160px;
+
+    color:#94a3b8;
+
+    font-weight:600;
+
+}
+
+.detailValue{
+
+    color:white;
+
+    font-size:15px;
+
+    word-break:break-word;
+
+}
+
+
+/* ===============================
+   QR IMAGE
+================================ */
+
+.qrArea{
+
+    text-align:center;
+
+}
+
+.qrImage{
+
+    width:220px;
+
+    height:220px;
+
+    background:white;
+
+    padding:8px;
+
+    border-radius:14px;
+
+    object-fit:contain;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.qrImage:hover{
+
+    transform:scale(1.03);
+
+}
+
+/* ===================================
+   ACTION BAR
+=================================== */
+
+.actionBar{
+
+    display:flex;
+
+    gap:10px;
+
+    margin-top:18px;
+
+    padding-top:16px;
+
+    border-top:1px solid #334155;
+
+    justify-content:space-between;
+
+}
+
+.actionBtn{
+
+    flex:1;
+
+    height:42px;
+
+    border:none;
+
+    border-radius:10px;
+
+    color:rgb(23, 18, 102);
+
+    font-size:14px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.actionBtn:hover{
+
+    transform:translateY(-2px);
+
+    filter:brightness(1.08);
+
+}
+
+/* Button Colors */
+
+.viewBtn{
+
+    background:#2563eb;
+
+}
+
+.copyQrBtn{
+
+    background:#0ea5e9;
+
+}
+
+.copyDetailsBtn{
+
+    background:#16a34a;
+
+}
+
+.copyAccBtn{
+
+    background:#f59e0b;
+
+}
+
+.editBtn{
+
+    background:#9333ea;
+
+}
+
+.deleteBtn{
+
+    background:#dc2626;
+
+}
+
+
+/* ===================================
+   EMPTY PANEL
+=================================== */
+
+.empty{
+
+    text-align:center;
+
+    padding:50px;
+
+    border-radius:16px;
+
+    background:#1e293b;
+
+    border:1px dashed #475569;
+
+    color:#94a3b8;
+
+    font-size:18px;
+
+}
+
+
+/* ===================================
+   SCROLLBAR
+=================================== */
+
+::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#475569;
+
+    border-radius:20px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#0f172a;
+
+}
+
+/* ===================================
+   MODAL
+=================================== */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.75);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+.modalContent,
+.viewContent{
+
+    width:650px;
+
+    max-height:90vh;
+
+    overflow:auto;
+
+    background:#1e293b;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    border:1px solid #334155;
+
+}
+
+.modalContent h2,
+.viewContent h2{
+
+    margin-bottom:20px;
+
+    font-size:24px;
+
+}
+
+.modalContent label{
+
+    display:block;
+
+    margin-top:15px;
+
+    margin-bottom:6px;
+
+    color:#cbd5e1;
+
+    font-weight:600;
+
+}
+
+.modalContent input{
+
+    width:100%;
+
+    padding:12px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#0f172a;
+
+    color:#fff;
+
+    font-size:14px;
+
+}
+
+.checkRow{
+
+    display:flex !important;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-top:18px;
+
+}
+
+.checkRow input{
+
+    width:auto;
+
+}
+
+#extraSection{
+
+    display:none;
+
+}
+
+.buttonRow{
+
+    display:flex;
+
+    gap:12px;
+
+    margin-top:25px;
+
+}
+
+.buttonRow button{
+
+    flex:1;
+
+    height:45px;
+
+    border:none;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    color:rgb(19, 2, 2);
+
+    font-weight:600;
+
+    font-size:15px;
+
+}
+
+#saveBank{
+
+    background:#2563eb;
+
+}
+
+#closeModal,
+#closeView{
+
+    background:#dc2626;
+
+}
+
+#downloadQR{
+
+    background:#16a34a;
+
+}
+
+#viewImage{
+
+    width:100%;
+
+    max-height:500px;
+
+    object-fit:contain;
+
+    background:white;
+
+    border-radius:12px;
+
+    padding:10px;
+
+}
+
+/* ===================================
+   ANIMATIONS
+=================================== */
+
+.bankCard{
+
+    animation:fadeIn .35s ease;
+
+}
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(15px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+
+/* ===================================
+   EMPTY STATE
+=================================== */
+
+.empty{
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:15px;
+
+    min-height:300px;
+
+    border:2px dashed #334155;
+
+    border-radius:18px;
+
+    color:#94a3b8;
+
+    font-size:20px;
+
+    background:#172033;
+
+}
+
+.empty::before{
+
+    content:"🏦";
+
+    font-size:60px;
+
+}
+
+
+/* ===================================
+   BUTTON EFFECT
+=================================== */
+
+.actionBtn:active{
+
+    transform:scale(.96);
+
+}
+
+.toolbar button:active{
+
+    transform:scale(.96);
+
+}
+
+/* ===========================
+   IMAGE PREVIEW
+=========================== */
+
+.previewImage{
+
+    display:none;
+
+    width:120px;
+
+    height:120px;
+
+    margin-top:10px;
+
+    border-radius:12px;
+
+    object-fit:contain;
+
+    background:#fff;
+
+    padding:8px;
+
+    border:1px solid #334155;
+
+}
+
+/* ===================================
+   DASHBOARD STATS
+=================================== */
+
+.stats{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:15px;
+
+    margin-bottom:20px;
+
+}
+
+.statCard{
+
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+
+    padding:20px;
+
+    border-radius:14px;
+    height: fit-content;
+
+    text-align:center;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.25);
+
+}
+
+.statCard h3{
+
+    font-size:34px;
+
+    margin-bottom:8px;
+
+}
+
+.statCard p{
+
+    font-size:15px;
+
+    color:#dbeafe;
+
+}
+
+/* ===================================
+   PREMIUM HEADER
+=================================== */
+
+.header{
+
+    position:sticky;
+
+    top:0;
+
+    z-index:999;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    background:linear-gradient(135deg,#2563eb,#7c3aed);
+
+    padding:20px;
+
+    border-radius:18px;
+
+    margin-bottom:20px;
+
+}
+
+.title{
+
+    font-size:30px;
+
+    font-weight:700;
+
+    color:#fff;
+
+}
+
+#searchInput{
+
+    width:320px;
+
+    height:46px;
+
+    border:none;
+
+    border-radius:12px;
+
+    padding:0 15px;
+
+    font-size:15px;
+
+    background:#ffffff;
+
+    color:#111827;
+
+}
+
+#searchInput::placeholder{
+
+    color:#6b7280;
+
+}
+
+/* ===================================
+   TOAST
+=================================== */
+
+#toast{
+
+    position:fixed;
+
+    right:20px;
+
+    bottom:20px;
+
+    background:#16a34a;
+
+    color:white;
+
+    padding:14px 20px;
+
+    border-radius:12px;
+
+    font-weight:600;
+
+    opacity:0;
+
+    transform:translateY(30px);
+
+    transition:.3s;
+
+    z-index:9999;
+
+}
+
+#toast.show{
+
+    opacity:1;
+
+    transform:translateY(0);
+
+}
+
+/* ===================================
+   LAYOUT
+=================================== */
+
+.layout{
+
+display:flex;
+
+height:100vh;
+
+overflow:hidden;
+
+}
+
+.sidebar{
+
+    width:250px;
+    background:#03363f;
+    border-radius:10px;
+    padding:15px;
+    height:100vh;
+
+    display:flex;
+    flex-direction:column;
+
+    box-shadow:0 0 20px rgba(0,0,0,.3);
+
+}
+
+.sidebar h2{
+
+    text-align:center;
+
+    color:rgba(4, 238, 255, 0.959);
+
+    margin-bottom:25px;
+
+    font-size:24px;
+
+    font-family: Georgia, 'Times New Roman', Times, serif;
+
+}
+
+.mainContent{
+
+flex:1;
+
+overflow-y:auto;
+
+height:100vh;
+
+padding:25px;
+
+}
+
+.mainContent{
+    flex:1;
+    height:100vh;
+    overflow-y:auto;
+    padding:0 25px 25px 25px;
+}
+
+.menuBtn{
+
+width:100%;
+
+height:50px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+padding:0 16px;
+
+border:none;
+
+border-radius:12px;
+
+background:#1f2937;
+
+color:#fff;
+
+font-size:15px;
+
+font-weight:600;
+
+cursor:pointer;
+
+transition:.25s;
+
+margin-bottom:10px;
+
+box-sizing:border-box;
+
+}
+
+.menuBtn:hover{
+
+background:#2563eb;
+
+transform:translateX(6px);
+
+}
+
+.menuBtn.active{
+
+background:#2563eb;
+
+}
+
+/* ===================================
+   CATEGORY
+=================================== */
+
+.categoryBox{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+    margin-top:8px;
+
+}
+
+.categoryItem{
+
+    background:#0f172a;
+
+    border:1px solid #334155;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    color:white;
+
+}
+
+.categoryItem:hover{
+
+    border-color:#2563eb;
+
+}
+
+.categoryItem input{
+
+    margin-right:10px;
+
+}
+
+.menuBtn{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.menuBtn span{
+
+    background:#2563eb;
+
+    min-width:28px;
+
+    height:28px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:13px;
+
+    font-weight:bold;
+
+}
+
+/* ===========================
+   OPTIONS
+=========================== */
+
+.optionList{
+
+display:flex;
+
+flex-direction:column;
+
+gap:12px;
+
+margin-top:20px;
+
+}
+
+.optionBtn{
+
+width:100%;
+
+height:50px;
+
+border:none;
+
+border-radius:12px;
+
+background:#1e40af;
+
+color:white;
+
+font-size:15px;
+
+font-weight:600;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.optionBtn:hover{
+
+background:#2563eb;
+
+}
+
+.closeOption{
+
+background:#dc2626;
+
+}
+
+.closeOption:hover{
+
+background:#ef4444;
+
+}
+
+.sidebarBottom{
+
+    margin-top:auto;
+
+}
+
+.logoArea{
+
+text-align:center;
+
+padding:15px 10px 25px;
+
+border-bottom:1px solid rgba(255,255,255,.15);
+
+margin-bottom:20px;
+
+}
+
+.logoIcon{
+
+font-size:42px;
+
+margin-bottom:10px;
+
+}
+
+.logoArea h2{
+
+margin:0;
+
+color:#00eaff;
+
+font-size:22px;
+
+}
+
+.logoArea p{
+
+margin-top:6px;
+
+font-size:12px;
+
+color:#b6cbd1;
+
+}
+
+.menuBtn.active{
+
+background:#2563eb;
+
+box-shadow:0 0 12px rgba(37,99,235,.5);
+
+}
+
+.bankCard{
+
+animation:fadeIn .25s ease;
+
+}
+
+@keyframes fadeIn{
+
+from{
+
+opacity:0;
+
+transform:translateY(10px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+#recentBtn{
+    height:48px;
+    padding:0 20px;
+    border:none;
+    border-radius:12px;
+    background:#0ea5e9;
+    color:#fff;
+    font-weight:600;
+    cursor:pointer;
+}
+
+#recentPanel{
+
+width:360px;
+
+background:#1d2436;
+
+border-radius:14px;
+
+padding:20px;
+
+margin-left:20px;
+
+overflow:auto;
+
+height:calc(100vh - 170px);
+
+}
+
+.recentItem{
+
+padding:12px;
+
+background:#283246;
+
+margin-bottom:10px;
+
+border-radius:10px;
+
+}
+
+/* ===========================
+   RIGHT SIDEBAR
+=========================== */
+
+.rightSidebar{
+
+    position: fixed;
+
+    top: 0;
+
+    right: 0;
+
+    padding-bottom: 15px;
+
+    padding-left: 15px;
+
+    padding-right: 15px;
+
+    padding-top: 15px;
+
+    border-top-left-radius: 10px;
+
+    border-bottom-left-radius: 10px;
+
+    border-bottom-right-radius: 10px;
+
+    border-top-right-radius: 10px;
+
+    unicode-bidi: isolate;
+
+    background-clip: border-box;
+
+    margin-top: 18px;
+
+    margin-right: 18px;
+
+    margin-left: 18px;
+
+    margin-bottom: 18px;
+
+    width: 300px;
+
+    height: 1181.25px;
+
+    background: #0b3f47;
+
+    padding: 15px;
+
+    overflow-y: auto;
+
+    box-sizing: border-box;
+
+    border-left: 1px solid rgba(255,255,255,.08);
+
+    z-index: 100;
+}
+
+.rightGroup{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+}
+
+.rightBtn{
+
+    width:100%;
+
+    height:50px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:flex-start;
+
+    padding:0 18px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#1f2937;
+
+    color:#fff;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    box-sizing:border-box;
+
+}
+
+.rightBtn:hover{
+
+    background:#2563eb;
+
+}
+
+.statCard{
+
+    background:#2563eb;
+
+    border-radius:12px;
+
+    padding:18px;
+
+    margin-bottom:12px;
+
+    text-align:center;
+
+    color:#fff;
+
+}
+
+.statCard strong{
+
+    display:block;
+
+    font-size:32px;
+
+    margin-top:8px;
+
+}
+
+/* GRID */
+.gridMode #bankContainer{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(500px,1fr));
+    gap:15px;
+}
+
+/* LIST */
+.listMode #bankContainer{
+    display:block;
+}
+
+.toolbar{
+
+    display:none;
+
+}
+
+/* ===================================
+   BANK SELECTOR
+=================================== */
+
+.bankSelector{
+    position:relative;
+    width:100%;
+}
+
+.bankSearchBox{
+    width:100%;
+    height:46px;
+
+    display:flex;
+    align-items:center;
+
+    gap:8px;
+
+    padding:0 12px;
+
+    background:#0f172a;
+
+    border:1px solid #334155;
+
+    border-radius:10px;
+}
+
+.bankSearchBox span{
+    font-size:17px;
+}
+
+.bankSearchBox input{
+    border:none !important;
+    outline:none;
+    padding:0 !important;
+
+    background:transparent !important;
+
+    width:100%;
+}
+
+.bankDropdown{
+
+    display:none;
+
+    position:absolute;
+
+    top:52px;
+    left:0;
+    right:0;
+
+    max-height:280px;
+
+    overflow-y:auto;
+
+    background:#172033;
+
+    border:1px solid #334155;
+
+    border-radius:12px;
+
+    z-index:5000;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.45);
+}
+
+.bankDropdown.show{
+    display:block;
+}
+
+.bankOption{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:10px 12px;
+
+    cursor:pointer;
+
+    border-bottom:1px solid rgba(255,255,255,.05);
+
+    color:white;
+
+    transition:.2s;
+}
+
+.bankOption:hover{
+    background:#2563eb;
+}
+
+.bankOption img{
+
+    width:38px;
+    height:38px;
+
+    border-radius:50%;
+
+    object-fit:contain;
+
+    background:white;
+
+    padding:4px;
+}
+
+.bankOptionName{
+    font-size:14px;
+    font-weight:600;
+}
+
+.selectedBankPreview{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    margin-top:12px;
+
+    padding:12px;
+
+    background:#0f172a;
+
+    border-radius:12px;
+
+    border:1px solid #334155;
+}
+
+.selectedBankPreview .previewImage{
+
+    margin:0;
+
+    width:65px;
+    height:65px;
+}
+
+#selectedBankText{
+
+    color:#cbd5e1;
+
+    font-weight:600;
+}
+
+
+/* ===================================
+   BANK LOGO MANAGER
+=================================== */
+
+.bankLogoManager{
+    width:700px;
+}
+
+.bankLogoManager hr{
+
+    border:none;
+
+    border-top:1px solid #334155;
+
+    margin:25px 0;
+}
+
+#bankLogoList{
+
+    margin-top:15px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+    max-height:350px;
+
+    overflow-y:auto;
+}
+
+.logoManagerItem{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:12px;
+
+    background:#0f172a;
+
+    border:1px solid #334155;
+
+    border-radius:12px;
+}
+
+.logoManagerItem img{
+
+    width:50px;
+    height:50px;
+
+    border-radius:50%;
+
+    object-fit:contain;
+
+    background:white;
+
+    padding:5px;
+
+    flex-shrink:0;
+}
+
+.logoManagerName{
+
+    flex:1;
+
+    color:white;
+
+    font-weight:600;
+
+    font-size:14px;
+}
+
+.logoManagerActions{
+
+    display:flex;
+
+    gap:6px;
+}
+
+.logoManagerActions button{
+
+    border:none;
+
+    border-radius:8px;
+
+    padding:8px 10px;
+
+    color:white;
+
+    cursor:pointer;
+
+    font-weight:600;
+}
+
+.logoEditBtn{
+    background:#7c3aed;
+}
+
+.logoDeleteBtn{
+    background:#dc2626;
+}
+
+.logoManagerActions button:hover{
+    filter:brightness(1.15);
+}
+
+
+/* ===================================
+   NO LOGO
+=================================== */
+
+.noBankLogo{
+
+    width:65px;
+    height:65px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    background:#334155;
+
+    border-radius:50%;
+
+    font-size:25px;
+}
+
+/* ===========================
+   ADDITIONAL BANK DETAILS
+=========================== */
+.extraDetailsDivider{
+    margin:22px 0 12px;
+    padding:11px 12px;
+    border-left:4px solid #38bdf8;
+    border-radius:8px;
+    background:rgba(14,165,233,.13);
+    color:#7dd3fc;
+    font-size:13px;
+    font-weight:800;
+    letter-spacing:.5px;
+}
+#extraSection input{
+    width:100%;
+}
+.actionBar{
+    flex-wrap:wrap;
+}
+.actionBar .actionBtn{
+    flex:1 1 130px;
+    min-width:120px;
+}
+.fullDetailsBtn{
+    background:#0891b2;
+    color:#fff;
+}
+.fullDetailsContent{
+    width:min(720px,94vw);
+    max-height:88vh;
+    overflow-y:auto;
+}
+.fullDetailsHeader{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:20px;
+    padding-bottom:14px;
+    border-bottom:1px solid #334155;
+}
+.fullDetailsHeader h2{
+    color:#f8fafc;
+    font-size:22px;
+}
+.closeDetailsX{
+    border:0;
+    border-radius:8px;
+    background:#dc2626;
+    color:white;
+    font-size:18px;
+    padding:8px 12px;
+    cursor:pointer;
+}
+.fullDetailsBody{
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+}
+.fullDetailRow{
+    display:grid;
+    grid-template-columns:minmax(170px, .8fr) minmax(0,1.2fr);
+    gap:14px;
+    padding:13px 14px;
+    border:1px solid #334155;
+    border-radius:10px;
+    background:#111c30;
+}
+.fullDetailLabel{
+    color:#93c5fd;
+    font-weight:700;
+    overflow-wrap:anywhere;
+}
+.fullDetailValue{
+    color:#f8fafc;
+    overflow-wrap:anywhere;
+    white-space:pre-wrap;
+}
+.emptyDetail{
+    color:#64748b;
+    font-style:italic;
+}
+@media(max-width:600px){
+    .fullDetailRow{
+        grid-template-columns:1fr;
+        gap:5px;
+    }
+}
