@@ -221,7 +221,9 @@ const remarks = document.getElementById("remarks");
 
 const additionalFieldIds = {
     profileGmail: "profileGmail",
+    profileGmailPassword: "profileGmailPassword",
     webGmail: "webGmail",
+    webGmailPassword: "webGmailPassword",
     mobileNumber: "mobileNumber",
     fonepayUsername: "fonepayUsername",
     fonepayPassword: "fonepayPassword",
@@ -247,7 +249,9 @@ function setAdditionalFields(bank = {}) {
 function showFullBankDetails(bank) {
     const rows = [
         ["Profile Gmail", bank.profileGmail],
+        ["Profile Gmail Password", bank.profileGmailPassword],
         ["Web Gmail", bank.webGmail],
+        ["Web Gmail Password", bank.webGmailPassword],
         ["Mobile Number", bank.mobileNumber],
         ["Fonepay Username", bank.fonepayUsername],
         ["Fonepay Password", bank.fonepayPassword],
@@ -274,6 +278,60 @@ document.getElementById("closeFullDetailsBottom").addEventListener("click", clos
 fullDetailsModal.addEventListener("click", event => {
     if (event.target === fullDetailsModal) closeFullBankDetails();
 });
+
+// =====================================
+// SEARCH-AWARE RIGHT SIDEBAR DETAILS
+// =====================================
+const rightSidebar = document.querySelector(".rightSidebar");
+const originalRightSidebarHTML = rightSidebar ? rightSidebar.innerHTML : "";
+function updateSearchDetailsSidebar() {
+    if (!rightSidebar) return;
+    const term = (searchInput?.value || "").trim().toLowerCase();
+    if (!term) {
+        rightSidebar.innerHTML = originalRightSidebarHTML;
+        rightSidebar.classList.remove("showingBankDetails");
+        return;
+    }
+    const match = banks.find(bank =>
+        (bank.bank || "").toLowerCase().includes(term) ||
+        (bank.display || "").toLowerCase().includes(term)
+    );
+    if (!match) {
+        rightSidebar.innerHTML = originalRightSidebarHTML;
+        rightSidebar.classList.remove("showingBankDetails");
+        return;
+    }
+const details = [
+    ["Profile Gmail", match.profileGmail],
+    ["Profile Gmail Password", match.profileGmailPassword],
+
+    ["Web Gmail", match.webGmail],
+    ["Web Gmail Password", match.webGmailPassword],
+
+    ["Mobile Number", match.mobileNumber],
+
+    ["Fonepay Username", match.fonepayUsername],
+    ["Fonepay Password", match.fonepayPassword],
+
+    ["Connect IPS Username", match.connectIpsUsername],
+    ["Connect IPS Password", match.connectIpsPassword],
+
+    ["Transaction PIN", match.transactionPin],
+
+    ["Login Mobile — Phone Name", match.loginPhoneName]
+];
+    rightSidebar.classList.add("showingBankDetails");
+    rightSidebar.innerHTML = `
+        <div class="rightTitle">🏦 ${escapeHTML(match.display || match.bank || "Bank")} — Full Details</div>
+        <div class="autoFullDetails">${details.map(([label,value]) => `
+            <div class="autoDetailRow"><span>${escapeHTML(label)}</span><strong>${value ? escapeHTML(value) : '<i>Not added</i>'}</strong></div>
+        `).join("")}</div>
+        <button type="button" class="rightBtn" id="backToControlPanel">← Control Panel</button>`;
+    document.getElementById("backToControlPanel")?.addEventListener("click", () => {
+        rightSidebar.innerHTML = originalRightSidebarHTML;
+        rightSidebar.classList.remove("showingBankDetails");
+    });
+}
 
 // =====================================
 // BANK DROPDOWN
@@ -630,7 +688,9 @@ const bank = {
     remarks: remarks.value.trim(),
 
     profileGmail: additionalFields.profileGmail.value.trim(),
+    profileGmailPassword: additionalFields.profileGmailPassword.value,
     webGmail: additionalFields.webGmail.value.trim(),
+    webGmailPassword: additionalFields.webGmailPassword.value,
     mobileNumber: additionalFields.mobileNumber.value.trim(),
     fonepayUsername: additionalFields.fonepayUsername.value.trim(),
     fonepayPassword: additionalFields.fonepayPassword.value,
@@ -842,15 +902,9 @@ function renderBanks() {
     if (filtered.length === 0) {
 
         bankContainer.innerHTML = `
-
-            <div class="empty">
-
-                No Banks Added
-
-            </div>
-
+            <div class="empty">No Banks Added</div>
         `;
-
+        updateSearchDetailsSidebar();
         return;
 
     }
@@ -879,10 +933,8 @@ function renderBanks() {
             <div class="cardHeader">
 
                 <div class="displayName">
-
-                    🏦
-                    ${escapeHTML(bank.display || "")}
-
+                    <img class="titleBankIcon" src="${logo}" alt="">
+                    <span>${escapeHTML(bank.display || "")}</span>
                 </div>
 
                 <div class="favorite">
@@ -1027,6 +1079,7 @@ function renderBanks() {
 
                 </div>
 
+                <button class="actionBtn viewBtn qrViewButton">👁 View QR</button>
 
             </div>
 
@@ -1065,21 +1118,6 @@ function renderBanks() {
                     :
 
                     `
-
-                    <button
-                        class="actionBtn fullDetailsBtn"
-                    >
-                        📋 View Full Details
-                    </button>
-
-                    <button
-                        class="actionBtn viewBtn"
-                    >
-
-                        👁 View
-
-                    </button>
-
 
                     <button
                         class="actionBtn copyQrBtn"
@@ -1307,7 +1345,7 @@ resetFavBtn.addEventListener("click", async () => {
 // SEARCH
 // =====================================
 
-searchInput.addEventListener("input", renderBanks);
+searchInput.addEventListener("input", () => { renderBanks(); updateSearchDetailsSidebar(); });
 
 
 // =====================================
@@ -2364,3 +2402,6 @@ function optimizeCloudinary(url, width) {
         `/image/upload/f_auto,q_auto,w_${width}/`
     );
 }
+
+// Keep the details panel synchronized with the bank-name search.
+if (searchInput) searchInput.addEventListener("input", updateSearchDetailsSidebar);
